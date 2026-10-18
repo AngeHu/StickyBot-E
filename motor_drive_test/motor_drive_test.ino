@@ -172,8 +172,8 @@ const int STRAIGHT_SPEED = 20;
 const int BACKWARD_SPEED = 35;
 const int DIAGONAL_SPEED = 35;
 const unsigned long DIAGONAL_DURATION_MS = 2000;
-const unsigned long SERVO_SETTLE_DELAY_MS = 200;
-const unsigned long DIRECTION_CHANGE_DELAY_MS = 200;
+const unsigned long SERVO_SETTLE_DELAY_MS = 1000;
+const unsigned long DIRECTION_CHANGE_DELAY_MS = 1000;
 const uint8_t STICKER_SERVO_ID = 1;
 const int16_t STICKER_CCW_SPEED = -3400;
 const uint8_t STICKER_ACCELERATION = 0;
@@ -184,6 +184,7 @@ SMS_STS sticker;
 void beginSticker() {
     Serial.begin(1000000);
     sticker.pSerial = &Serial;
+    sticker.IOTimeOut = 10;
     delay(500);
 }
 

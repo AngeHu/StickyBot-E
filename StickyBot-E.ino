@@ -1,26 +1,18 @@
 #include "src/Driver.h"
 
-// Driver front(ENA_1, IN1_1, IN2_1, ENB_1, IN3_1, IN4_1);
-// Driver rear(ENA_2, IN1_2, IN2_2, ENB_2, IN3_2, IN4_2);
-
-// void setup() {
-//     front.begin();
-//     rear.begin();
-
-//     front.set_direction(true);
-//     rear.set_direction(true);
-// }
-
-
-// void loop() {
-//     front.set_speed(50);
-//     rear.set_speed(50);
-// }
+DCDriver front(ENA_1, IN1_1, IN2_1, ENB_1, IN3_1, IN4_1);
+DCDriver rear(ENA_2, IN1_2, IN2_2, ENB_2, IN3_2, IN4_2);
+bool movement_completed = false;
 
 // SMS_STS st;
 ServoDriver st;
 
 void setup() {
+    front.begin();
+    rear.begin();
+    front.set_direction(true);
+    rear.set_direction(true);
+
     // Uno hardware UART, pins D0 and D1
     // Servo default baud rate: 1 Mbps
     // st.pSerial = &Serial;
@@ -30,6 +22,20 @@ void setup() {
 
 void loop()
 {
+    if (movement_completed) {
+        return;
+    }
+
+    front.set_speed(20);
+    rear.set_speed(20);
+    delay(1000);
+
+    front.set_speed(0);
+    rear.set_speed(0);
+    front.stop();
+    rear.stop();
+    movement_completed = true;
+
     // st.move_sticker(90);
     // delay(2000);
     // st.move_sticker(0);
